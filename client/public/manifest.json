@@ -1,0 +1,18 @@
+{
+  "name": "KAIROS — Your Sacred Moment",
+  "short_name": "KAIROS",
+  "description": "AI-powered guidance for first-generation students in India",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#04010E",
+  "theme_color": "#7C5CFC",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

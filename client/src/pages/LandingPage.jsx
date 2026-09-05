@@ -12,6 +12,7 @@ import Footer          from '../components/shared/Footer'
 import LiquidBackground from '../three/LiquidBackground'
 import FeedbackWidget  from '../components/shared/FeedbackWidget'
 import ScrollReveal    from '../components/Landing/ScrollReveal'
+import PWAInstallPrompt from '../components/shared/PWAInstallPrompt'
 
 export default function LandingPage() {
   const [revealed, setRevealed] = useState(false)
@@ -42,6 +43,7 @@ export default function LandingPage() {
         <FeedbackSection />
         <CTASection />
         <Footer />
+        <PWAInstallPrompt />
    </motion.div>
     </div>
   )

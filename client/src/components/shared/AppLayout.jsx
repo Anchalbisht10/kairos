@@ -8,6 +8,7 @@ import {
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 import FeedbackWidget from './FeedbackWidget'
+import PWAInstallPrompt from '../components/shared/PWAInstallPrompt'
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard',    href: '/dashboard'    },
@@ -134,6 +135,7 @@ export default function AppLayout({ children }) {
         {children}
       </main>
        <FeedbackWidget />
+       <PWAInstallPrompt />
     </div>
   )
 }
