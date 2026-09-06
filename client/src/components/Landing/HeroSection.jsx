@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import KAICharacter from './KAICharacter'
-
+import { Link } from 'react-router-dom'
 const fadeUp = (delay = 0) => ({
   initial:    { opacity: 0, y: 24 },
   animate:    { opacity: 1, y: 0  },
@@ -83,9 +83,9 @@ export default function HeroSection() {
 
             {/* CTAs */}
 <motion.div {...fadeUp(1.2)} className="flex flex-wrap gap-3 mb-12">
-              <a href="/signup" className="btn-primary text-[12px] py-3 px-7">
-                Find Your Moment <ArrowRight size={13} />
-              </a>
+            <Link to="/signup" className="btn-primary text-[12px] py-3 px-7">
+  Find Your Moment <ArrowRight size={13} />
+</Link>
               <a href="#kai" className="btn-ghost text-[12px] py-3 px-7">
                 Meet KAI
               </a>
