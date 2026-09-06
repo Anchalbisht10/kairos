@@ -1,12 +1,23 @@
 import { motion } from 'framer-motion'
 import { Sparkles, Heart } from 'lucide-react'
-
+import { Link } from 'react-router-dom'
 const links = {
-  Platform: ['Meet KAI', 'Career Compass', 'Scholarships', 'Stories', 'Ask Anything'],
-Support: ['Our Mission', 'The Creator', 'Privacy Policy', 'Terms of Use', 'Contact', 'Accessibility'],
-  Community:['Student Stories', 'Scholarship Winners', 'Mentorship', 'Campus Connect'],
+  Platform: [
+    { label: 'Meet KAI',       href: '/chat'          },
+    { label: 'Career Compass', href: '/compass'       },
+    { label: 'Scholarships',   href: '/scholarships'  },
+    { label: 'Stories',        href: '/stories'       },
+    { label: 'Ask Anything',   href: '/ask'           },
+  ],
+  Support: [
+    { label: 'Our Mission',    href: '/about'         },
+    { label: 'The Creator',    href: '/creator'       },
+    { label: 'Privacy Policy', href: '/privacy'       },
+    { label: 'Terms of Use',   href: '/terms'         },
+    { label: 'Contact',        href: '/contact'       },
+    { label: 'Accessibility',  href: '/accessibility' },
+  ],
 }
-
 export default function Footer() {
   return (
     <footer className="relative border-t border-violet-500/08 py-16">
@@ -36,32 +47,25 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          {Object.entries(links).map(([category, items]) => (
-            <div key={category}>
-              <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-violet-400/50 mb-4">
-                {category}
-              </div>
-              <ul className="flex flex-col gap-3">
-                {items.map(item => (
-                  <li key={item}>
-                    <a  href={
-  item === 'Our Mission'    ? '/about'       :
-  item === 'The Creator'    ? '/creator'     :
-  item === 'Privacy Policy' ? '/privacy'     :
-  item === 'Terms of Use'   ? '/terms'       :
-  item === 'Contact'        ? '/contact'     :
-  item === 'Accessibility'  ? '/accessibility':
-  '#'
-}
-  className="text-[12px] text-ink-100/28 hover:text-violet-300 transition-colors duration-200"
->
-  {item}
-</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    {Object.entries(links).map(([category, items]) => (
+  <div key={category}>
+    <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-violet-400/50 mb-4">
+      {category}
+    </div>
+    <ul className="flex flex-col gap-3">
+      {items.map(item => (
+        <li key={item.label}>
+          <Link
+            to={item.href}
+            className="text-[12px] text-ink-100/28 hover:text-violet-300 transition-colors duration-200"
+          >
+            {item.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
         </div>
 
         {/* Bottom */}

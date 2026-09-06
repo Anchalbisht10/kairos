@@ -11,7 +11,7 @@ export default function PWAInstallPrompt() {
       e.preventDefault()
       setPrompt(e)
       // Show after 30 seconds
-      setTimeout(() => setVisible(true), 30000)
+      setTimeout(() => setVisible(true), 5000)
     }
     window.addEventListener('beforeinstallprompt', handler)
     return () => window.removeEventListener('beforeinstallprompt', handler)
