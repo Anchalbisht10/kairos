@@ -17,6 +17,8 @@ export default function PWAInstallPrompt() {
     return () => window.removeEventListener('beforeinstallprompt', handler)
   }, [])
 
+  //lets see if it works 
+
   const handleInstall = async () => {
     if (!prompt) return
     prompt.prompt()
