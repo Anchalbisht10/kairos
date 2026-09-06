@@ -8,7 +8,7 @@ import {
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 import FeedbackWidget from './FeedbackWidget'
-import PWAInstallPrompt from '../components/shared/PWAInstallPrompt'
+import PWAInstallPrompt from "./PWAInstallPrompt";
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard',    href: '/dashboard'    },
@@ -102,6 +102,8 @@ export default function AppLayout({ children }) {
           </button>
         </div>
       </div>
+
+      {/* // ok this above line is quite important  */}
 
       {/* Mobile menu */}
       <AnimatePresence>
