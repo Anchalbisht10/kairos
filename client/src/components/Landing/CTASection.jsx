@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export default function CTASection() {
   const ref = useRef(null)
@@ -55,12 +56,12 @@ KAI is ready when you are.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/signup" className="btn-primary text-sm px-10 py-4">
-              Begin Your Journey <ArrowRight size={15} />
-            </a>
-            <a href="#kai" className="btn-ghost text-sm px-10 py-4">
-              Meet KAI first
-            </a>
+           <Link to="/signup" className="btn-primary text-sm px-10 py-4">
+  Begin Your Journey <ArrowRight size={15} />
+</Link>
+<a href="#kai" className="btn-ghost text-sm px-10 py-4">
+  Meet KAI first
+</a>
           </div>
 
           <p className="text-ink-100/18 text-[11px] mt-6">
