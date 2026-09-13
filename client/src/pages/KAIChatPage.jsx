@@ -106,19 +106,27 @@ const sendMessage = async () => {
       <div className="flex flex-col" style={{ height: '100dvh' }}>
 
         {/* Chat header */}
-        <div className="flex items-center gap-3 px-6 py-4 border-b border-violet-500/08 bg-void-950/80 backdrop-blur-xl flex-shrink-0">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #7C5CFC, #9B7EFF)' }}>
-            <Sparkles size={16} className="text-white" />
-          </div>
-          <div>
-            <div className="text-[13px] font-semibold text-ink-100/90">KAI</div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[10px] text-ink-100/30">Always here for you</span>
-            </div>
-          </div>
-        </div>
+      <div className="flex items-center justify-between px-6 py-4 border-b border-violet-500/08 bg-void-950/80 backdrop-blur-xl flex-shrink-0">
+  <div className="flex items-center gap-3">
+    <div className="w-9 h-9 rounded-xl flex items-center justify-center"
+      style={{ background: 'linear-gradient(135deg, #7C5CFC, #9B7EFF)' }}>
+      <Sparkles size={16} className="text-white" />
+    </div>
+    <div>
+      <div className="text-[13px] font-semibold text-ink-100/90">KAI</div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+        <span className="text-[10px] text-ink-100/30">Always here for you</span>
+      </div>
+    </div>
+  </div>
+  <button
+    onClick={() => setMessages([WELCOME_MESSAGE])}
+    className="text-[11px] text-ink-100/30 hover:text-violet-400 transition-colors px-3 py-1.5 rounded-lg border border-violet-500/20 hover:border-violet-500/40"
+  >
+    + New Chat
+  </button>
+</div>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-4 lg:px-8 py-6 flex flex-col gap-4">

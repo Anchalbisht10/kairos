@@ -26,10 +26,11 @@ export default function AppLayout({ children }) {
   const [open, setOpen] = useState(false)
 
   const handleLogout = async () => {
-    await logout()
-    toast.success('See you soon! 💜')
-    navigate('/')
-  }
+  if (!window.confirm('Are you sure you want to sign out?')) return
+  await logout()
+  toast.success('See you soon! 💜')
+  navigate('/')
+}
 
   return (
     <div className="min-h-screen bg-void-950 flex">

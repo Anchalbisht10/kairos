@@ -13,64 +13,54 @@ const questions = [
     question: 'What do you love doing?',
     sub: 'Think about subjects, hobbies, activities — anything that excites you.',
     placeholder: 'e.g. I love solving math problems, helping people, drawing, reading about science...',
-    type: 'textarea',
   },
   {
     id: 'education',
     question: 'What is your current education?',
     sub: 'Tell us where you are right now.',
     placeholder: 'e.g. Just finished 12th PCM, Currently in 2nd year BA...',
-    type: 'textarea',
   },
   {
     id: 'marks',
     question: 'What were your approximate marks?',
     sub: 'Be honest — there are good paths for every score range.',
     placeholder: 'e.g. 72% in Class 12, 85% in Class 10...',
-    type: 'textarea',
   },
   {
     id: 'location',
     question: 'Where are you based?',
     sub: 'This helps us find colleges and opportunities near you.',
     placeholder: 'e.g. Jaipur, Rajasthan — willing to move to nearby cities...',
-    type: 'textarea',
   },
   {
     id: 'financial',
     question: 'What is your financial situation?',
     sub: 'Be honest — we will find paths that work for your reality.',
-    placeholder: 'e.g. Family income is around ₹3 lakh per year, can afford college fees up to ₹30,000...',
-    type: 'textarea',
+    placeholder: 'e.g. Family income is around ₹3 lakh per year...',
   },
   {
     id: 'family',
     question: 'What does your family expect?',
     sub: 'Understanding this helps KAI suggest realistic paths.',
-    placeholder: 'e.g. Parents want a government job, or they are open to anything stable...',
-    type: 'textarea',
+    placeholder: 'e.g. Parents want a government job...',
   },
   {
     id: 'goals',
     question: 'What is your dream for 5 years from now?',
     sub: 'Dream big — there are no wrong answers here.',
-    placeholder: 'e.g. I want to be financially independent and support my family, become a doctor...',
-    type: 'textarea',
+    placeholder: 'e.g. I want to be financially independent...',
   },
 ]
 
 export default function CompassPage() {
   const { user } = useAuth()
   const navigate  = useNavigate()
-  const [step,     setStep]     = useState(-1) // -1 = intro
-  const [answers,  setAnswers]  = useState({})
-  const [loading,  setLoading]  = useState(false)
-  const [results,  setResults]  = useState(null)
+  const [step,    setStep]    = useState(-1)
+  const [answers, setAnswers] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [results, setResults] = useState(null)
 
-  if (!user) {
-    navigate('/login')
-    return null
-  }
+  if (!user) { navigate('/login'); return null }
 
   const updateAnswer = (id, value) => setAnswers(p => ({ ...p, [id]: value }))
 
@@ -79,11 +69,8 @@ export default function CompassPage() {
     if (current && !answers[current.id]?.trim()) {
       return toast.error('Please answer this question to continue 💜')
     }
-    if (step < questions.length - 1) {
-      setStep(s => s + 1)
-    } else {
-      handleSubmit()
-    }
+    if (step < questions.length - 1) setStep(s => s + 1)
+    else handleSubmit()
   }
 
   const handleSubmit = async () => {
@@ -104,7 +91,7 @@ export default function CompassPage() {
     <AppLayout>
       <div className="p-6 lg:p-8 max-w-2xl mx-auto">
 
-        {/* Intro */}
+        {/* INTRO */}
         {step === -1 && !results && (
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
             className="text-center py-12">
@@ -116,23 +103,53 @@ export default function CompassPage() {
               Career Compass 🧭
             </h1>
             <p className="text-ink-100/40 text-sm leading-relaxed max-w-md mx-auto mb-8">
-              A gentle guided journey to discover career paths that actually fit your real life —
-              your marks, your location, your family, your dreams.
-              <br /><br />
+              A gentle guided journey to discover career paths that fit your real life.
               KAI will ask you 7 questions. Take your time. Be honest.
-              There are no wrong answers here.
             </p>
             <button onClick={() => setStep(0)} className="btn-primary text-sm px-10 py-4">
               Begin My Journey <ArrowRight size={15} />
             </button>
+
+            {/* Previous compass results */}
+            {user?.compassResults?.length > 0 && (
+              <div className="mt-12 text-left">
+                <h2 className="text-[11px] font-semibold tracking-[2px] uppercase text-ink-100/25 mb-4">
+                  Your Previous Results
+                </h2>
+                {[...user.compassResults].reverse().slice(0, 2).map((result, i) => (
+                  <div key={i} className="glass-card rounded-2xl p-5 mb-4">
+                    <div className="text-[10px] text-ink-100/25 mb-3">
+                      Journey {user.compassResults.length - i}
+                    </div>
+                    <div className="flex flex-col gap-2 mb-3">
+                      {result.paths?.slice(0, 3).map((path, j) => (
+                        <div key={j} className="flex items-center gap-3">
+                          <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0"
+                            style={{ background: 'rgba(155,126,255,0.15)' }}>
+                            <Sparkles size={11} className="text-violet-400" />
+                          </div>
+                          <span className="text-[12px] text-ink-100/60">
+                            {path.name || path.career || `Path ${j+1}`}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => setResults(result.paths)}
+                      className="text-[11px] text-violet-400 hover:text-violet-300 transition-colors"
+                    >
+                      View full results →
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </motion.div>
         )}
 
-        {/* Questions */}
+        {/* QUESTIONS */}
         {step >= 0 && !results && !loading && (
           <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }}>
-
-            {/* Progress */}
             <div className="mb-8">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[10px] text-ink-100/25 tracking-wider uppercase">
@@ -159,7 +176,6 @@ export default function CompassPage() {
                   {questions[step].question}
                 </h2>
                 <p className="text-ink-100/35 text-[12px] mb-6">{questions[step].sub}</p>
-
                 <textarea
                   rows={4}
                   placeholder={questions[step].placeholder}
@@ -172,28 +188,30 @@ export default function CompassPage() {
 
             <div className="flex gap-3 mt-6">
               {step > 0 && (
-                <button onClick={() => setStep(s => s - 1)} className="btn-ghost text-sm py-3 px-5 flex items-center gap-2">
+                <button onClick={() => setStep(s => s - 1)}
+                  className="btn-ghost text-sm py-3 px-5 flex items-center gap-2">
                   <ArrowLeft size={14} /> Back
                 </button>
               )}
-              <button onClick={handleNext} className="btn-primary flex-1 text-sm py-3 justify-center">
+              <button onClick={handleNext}
+                className="btn-primary flex-1 text-sm py-3 justify-center">
                 {step === questions.length - 1 ? 'Show My Paths ✨' : 'Continue'} <ArrowRight size={14} />
               </button>
             </div>
           </motion.div>
         )}
 
-        {/* Loading */}
+        {/* LOADING */}
         {loading && (
           <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }}
             className="text-center py-20">
             <div className="w-14 h-14 rounded-full border border-violet-500/30 animate-ping mx-auto mb-6" />
             <p className="text-ink-100/50 text-sm">KAI is analyzing your profile...</p>
-            <p className="text-ink-100/25 text-[11px] mt-2">Finding paths that actually fit your life 💜</p>
+            <p className="text-ink-100/25 text-[11px] mt-2">Finding paths that fit your life 💜</p>
           </motion.div>
         )}
 
-        {/* Results */}
+        {/* RESULTS */}
         {results && (
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}>
             <div className="flex items-center justify-between mb-8">
@@ -201,9 +219,12 @@ export default function CompassPage() {
                 <h2 className="font-display font-extrabold text-2xl text-ink-100 mb-1">
                   Your Career Paths ✨
                 </h2>
-                <p className="text-ink-100/35 text-[12px]">Based on your profile — real, achievable, just for you.</p>
+                <p className="text-ink-100/35 text-[12px]">
+                  Based on your profile — real, achievable, just for you.
+                </p>
               </div>
-              <button onClick={() => { setStep(-1); setResults(null); setAnswers({}) }}
+              <button
+                onClick={() => { setStep(-1); setResults(null); setAnswers({}) }}
                 className="btn-ghost text-sm py-2 px-4 flex items-center gap-2">
                 <RotateCcw size={13} /> Retake
               </button>
@@ -233,21 +254,27 @@ export default function CompassPage() {
 
                   {career.educationPath && (
                     <div className="mb-3">
-                      <div className="text-[10px] font-semibold text-ink-100/25 uppercase tracking-wider mb-1">Education Path</div>
+                      <div className="text-[10px] font-semibold text-ink-100/25 uppercase tracking-wider mb-1">
+                        Education Path
+                      </div>
                       <p className="text-[12px] text-ink-100/55 leading-relaxed">{career.educationPath}</p>
                     </div>
                   )}
 
                   {career.salaryRange && (
                     <div className="mb-3">
-                      <div className="text-[10px] font-semibold text-ink-100/25 uppercase tracking-wider mb-1">Salary Range</div>
+                      <div className="text-[10px] font-semibold text-ink-100/25 uppercase tracking-wider mb-1">
+                        Salary Range
+                      </div>
                       <p className="text-[12px] text-ink-100/55">{career.salaryRange}</p>
                     </div>
                   )}
 
                   {career.scholarship && (
                     <div className="mb-3">
-                      <div className="text-[10px] font-semibold text-ink-100/25 uppercase tracking-wider mb-1">Scholarship to Apply</div>
+                      <div className="text-[10px] font-semibold text-ink-100/25 uppercase tracking-wider mb-1">
+                        Scholarship to Apply
+                      </div>
                       <p className="text-[12px] text-violet-400/70">{career.scholarship}</p>
                     </div>
                   )}
@@ -263,13 +290,16 @@ export default function CompassPage() {
             </div>
 
             <div className="mt-6 text-center">
-              <p className="text-ink-100/25 text-[11px] mb-4">Want to explore more? Talk to KAI about these paths.</p>
+              <p className="text-ink-100/25 text-[11px] mb-4">
+                Want to explore more? Talk to KAI about these paths.
+              </p>
               <button onClick={() => navigate('/chat')} className="btn-primary text-sm py-3 px-8">
                 Talk to KAI about this →
               </button>
             </div>
           </motion.div>
         )}
+
       </div>
     </AppLayout>
   )
