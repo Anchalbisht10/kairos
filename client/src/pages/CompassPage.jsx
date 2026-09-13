@@ -53,7 +53,7 @@ const questions = [
 ]
 
 export default function CompassPage() {
-  const { user } = useAuth()
+  const { user, refreshUser } = useAuth()
   const navigate  = useNavigate()
   const [step,    setStep]    = useState(-1)
   const [answers, setAnswers] = useState({})
@@ -76,8 +76,9 @@ export default function CompassPage() {
   const handleSubmit = async () => {
     setLoading(true)
     try {
-      const { data } = await axios.post('/compass/analyze', { answers })
-      setResults(data.careers || [])
+     const { data } = await axios.post('/compass/analyze', { answers })
+setResults(data.careers || [])
+await refreshUser()
     } catch {
       toast.error('KAI is thinking — please try again 💜')
     } finally {

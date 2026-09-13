@@ -36,6 +36,12 @@ export function AuthProvider({ children }) {
     if (data.success) setUser(data.user)
     return data
   }
+  const refreshUser = async () => {
+  try {
+    const { data } = await axios.get('/auth/me')
+    if (data.success) setUser(data.user)
+  } catch {}
+}
 
   const logout = async () => {
     await axios.post('/auth/logout')
@@ -43,7 +49,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, checkAuth }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, logout, refreshUser, checkAuth }}>
       {children}
     </AuthContext.Provider>
   )
