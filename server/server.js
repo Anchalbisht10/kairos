@@ -19,6 +19,7 @@ import adminRoutes from './routes/admin.routes.js'
 dotenv.config()
 
 const app = express()
+app.set('trust proxy', 1)
 
 // Rate limiting
 const limiter = rateLimit({
